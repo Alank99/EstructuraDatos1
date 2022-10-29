@@ -1,41 +1,8 @@
 #include "structures.h"
 
-//Returns 1 if the list is empty, 0 if not.
-int		emptyCircular(t_circular *lst)
-{
-	if (lst->first == NULL)
-		return 1;
-	return 0;
-}
-
-//Initiates a new circular list.
-t_circular	*initCircular(void)
-{
-	t_circular *new;
-
-	new = (t_circular *)malloc(sizeof(t_circular));
-	new->first = NULL;
-	new->last = NULL;
-	return (new);
-}
-
-//Returns the size of the list.
-int		sizeCircular(t_circular *lst)
-{
-	int		size;
-	t_dlist	*index;
-
-	size = 0;
-	index = lst->first;
-	do
-	{
-		index = index->next;
-		size++;
-	} while (index != lst->first);
-	return (size);
-}
-
+//Fuction 1 add node
 //Adds the value to the end of the list.
+//Agrega el valor al final
 void	addCircular(t_circular *lst, int value)
 {
 	t_dlist	*new;
@@ -59,6 +26,7 @@ void	addCircular(t_circular *lst, int value)
 }
 
 //Adds the value to the start of the list.
+//Agrega el valor al inicio 
 void	addfirstCircular(t_circular *lst, int value)
 {
 	t_dlist	*new;
@@ -80,48 +48,20 @@ void	addfirstCircular(t_circular *lst, int value)
 	lst->first->past = lst->last;
 }
 
-//Prints all the times a specific value is found and its position, and returns the number.
-int		searchCircular(t_circular *lst, int value)
-{
-	t_dlist	*index;
-	int		times;
-	int		pos;
-
-	times = 0;
-	pos = 0;
-	index = lst->first;
-	do
-	{
-		if (index->value == value)
-		{
-			times++;
-			printf("Found %d on position %d\n", index->value, pos);
-		}
-		index = index->next;
-		pos++;
-	} while (index != lst->first);
-	return (times);
+//Function 2 add multiple consecutive nodes
+void    addMultipleCircular(t_circular *lst){
+    short int counter, value, i = 0;
+    printf("How many nodes you want to add?");
+    scanf("%hd",&counter);
+    for (i; i < counter; ++i)
+    {
+        printf("What is the value of the node %hd: ",i+1);
+        scanf("%hd",&value);
+        ((rand()%(1-0+1))<1 ? addfirstCircular(lst,value) : addCircular(lst,value));
+    }   
 }
 
-//Returns the average of the values in the list.
-double	avgCircular(t_circular *lst)
-{
-	t_dlist	*index;
-	double	avg;
-	double	count;
-
-	avg = 0;
-	count = 0;
-	index = lst->first;
-	do
-	{
-		avg += index->value;
-		count++;
-		index = index->next;
-	} while (index != lst->first);
-	return (avg / count);
-}
-
+//Function 3 delete a node
 //Deletes the first time a specific value is found in the list.
 void	delCircular(t_circular *lst, int value)
 {
@@ -155,6 +95,7 @@ void	delCircular(t_circular *lst, int value)
 	} while(index != lst->first);
 }
 
+//Function 4 delete a delete multiple nodes
 //Deletes all the times a specific value is found in the list.
 void	delallCircular(t_circular *lst, int value)
 {
@@ -193,20 +134,7 @@ void	delallCircular(t_circular *lst, int value)
 	} while(index != lst->first);
 }
 
-//Prints all the elements in the list with a tab between them
-void	printCircular(t_circular *lst)
-{
-	t_dlist	*index;
-
-	index = lst->first;
-	do
-	{
-		printf("%d\t", index->value);
-		index = index->next;
-	} while (index != lst->first);
-	printf("\n");
-}
-
+//Function 5 delete the entire circular list
 //Prints all the elements in the list with a tab between them
 void	freeCircular(t_circular *lst)
 {
@@ -221,4 +149,95 @@ void	freeCircular(t_circular *lst)
 	} while (index != lst->first);
 	free(lst);
 	lst = NULL;
+}
+//Function 6 search for a node 
+//Prints all the times a specific value is found and its position, and returns the number.
+int		searchCircular(t_circular *lst, int value)
+{
+	t_dlist	*index;
+	int		times;
+	int		pos;
+
+	times = 0;
+	pos = 0;
+	index = lst->first;
+	do
+	{
+		if (index->value == value)
+		{
+			times++;
+			printf("Found %d on position %d\n", index->value, pos);
+		}
+		index = index->next;
+		pos++;
+	} while (index != lst->first);
+	return (times);
+}
+//Fuction 7 circular list is empty
+//Returns 1 if the list is empty, 0 if not.
+int		emptyCircular(t_circular *lst)
+{
+	if (lst->first == NULL)
+		return 1;
+	return 0;
+}
+//Function 8 find the number of nodes
+//Returns the size of the list.
+int		sizeCircular(t_circular *lst)
+{
+	int		size;
+	t_dlist	*index;
+
+	size = 0;
+	index = lst->first;
+	do
+	{
+		index = index->next;
+		size++;
+	} while (index != lst->first);
+	return (size);
+}
+
+//Initiates a new circular list.
+t_circular	*initCircular(void)
+{
+	t_circular *new;
+
+	new = (t_circular *)malloc(sizeof(t_circular));
+	new->first = NULL;
+	new->last = NULL;
+	return (new);
+}
+
+//Returns the average of the values in the list.
+double	avgCircular(t_circular *lst)
+{
+	t_dlist	*index;
+	double	avg;
+	double	count;
+
+	avg = 0;
+	count = 0;
+	index = lst->first;
+	do
+	{
+		avg += index->value;
+		count++;
+		index = index->next;
+	} while (index != lst->first);
+	return (avg / count);
+}
+
+//Prints all the elements in the list with a tab between them
+void	printCircular(t_circular *lst)
+{
+	t_dlist	*index;
+
+	index = lst->first;
+	do
+	{
+		printf("%d\t", index->value);
+		index = index->next;
+	} while (index != lst->first);
+	printf("\n");
 }
